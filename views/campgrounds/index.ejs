@@ -1,0 +1,46 @@
+<% layout('layouts/boilerplate') %>
+
+    <h1 class="display-1">All campgrounds</h1>
+    <ul class="px-0">
+        <% for(let campground of campgrounds) { %>
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-12 col-lg-4">
+                        <img src="<%= campground.image %>" alt="" class="img-fluid w-100">
+                    </div>
+                    <div class="col-12 col-lg-8 d-flex flex-column">
+                        <div class="card-body mb-auto">
+                            <h5 class="card.title">
+                                <%= campground.title %>
+                            </h5>
+                            <p class="card-text">
+                                <%= campground.description %>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    <%= campground.location %>
+                                </small>
+                            </p>
+                        </div>
+                        <div>
+                            <ul class="list-group list-group-flush mt-auto">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a class="btn btn-primary" href="/campgrounds/<%=campground._id %>">View <%= campground.title %></a>
+                                    <% if(currentUser && campground.author.equals(currentUser._id)) {%>
+                                    <div>
+                                        <a class="btn btn-success"
+                                            href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+                                        <form class="d-inline"
+                                            action="/campgrounds/<%= campground._id %>?_method=DELETE" method="post">
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                    <% } %>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+    </ul>

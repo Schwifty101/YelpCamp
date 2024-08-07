@@ -1,0 +1,17 @@
+<% layout('layouts/boilerplate') %>
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-danger">
+                <h4 class="alert-heading">
+                    <b>Error!</b> <i><%= err.message %></i>
+                </h4>
+
+                <p>
+                    <%= err.stack %>
+                </p>
+                <a href="/">
+                    <button class="btn btn-dark">Back To Home</button>
+                </a>
+            </div>
+        </div>
+    </div>
