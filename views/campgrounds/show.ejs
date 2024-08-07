@@ -7,9 +7,16 @@
                 <div class="card-body">
                     <h5 class="card.title d-flex justify-content-between align-items-center">
                         <%= campground.title %>
+                        <% if (campground.author) { %>
                             <small class="badge rounded-pill text-bg-light text-muted" style="font-size: 12px;">
                                 <%= campground.author.username %>
                             </small>
+                        <% } else { %>
+                            <small class="badge rounded-pill text-bg-light text-muted" style="font-size: 12px;">
+                                Unknown author
+                            </small>
+                        <% } %>
+                        
                     </h5>
 
                     <p class="card-text">
