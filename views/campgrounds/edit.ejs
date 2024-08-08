@@ -20,7 +20,7 @@
 
     <div class="row">
         <h1 class="text-center">Edit Campground</h1>
-        <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="post" novalidate class="validated-form">
+        <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="post" novalidate class="validated-form" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label" for="title">Title</label>
                 <input class="form-control" type="text" id="title" name="campground[title]"
@@ -38,19 +38,11 @@
                 </div>
             </div>
             <div class=" mb-3">
-                <label class="form-label" for="image">Image URL</label>
-                <input class="form-control" type="text" id="image" name="campground[image]"
-                    value="<%= campground.image %>" required>
-                <div class="valid-feedback">
-                    Looks Good!
-                </div>
-            </div>
-            <div class=" mb-3">
                 <label class="form-label" for="price">Campground Price</label>
                 <div class="input-group">
                     <span class="input-group-text" id="price-label">$</span>
                     <input type="text" class="form-control" id="price-label" placeholder="0.00" name="campground[price]"
-                        value="<%= campground.price %>" required>
+                    value="<%= campground.price %>" required>
                     <div class="valid-feedback">
                         Looks Good!
                     </div>
@@ -61,10 +53,32 @@
                     Description
                 </label>
                 <textarea class="form-control" type="text" id="description" name="campground[description]"
-                    required><%= campground.description %></textarea>
+                required><%= campground.description %></textarea>
                 <div class="valid-feedback">
                     Looks Good!
                 </div>
+            </div>
+            <div class=" mb-3">
+                <div class="mb-3">
+                    <label for="images" class="form-label">Add more images</label>
+                    <input class="form-control" name="image" type="file" id="images" multiple>
+                </div>
+            </div>
+            <div class="mb-3">
+                <% campground.images.forEach(function(img, i) {%>
+                    <img src="<%= img.thumbnail %>" class="img-thumbnail w-25 h-25">
+                    <div class="block mt-1 mb-2">
+                        <div class="form-check-inline m-0">
+                            <input type="checkbox" id="img-<%= i %>" name="deleteImages[]" value="<%= img.filename %>">
+                        </div>
+                        <label for="img-<%= i %>">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                            </svg>
+                        </label>
+                    </div>
+                <% }) %>
             </div>
 
             <button class="btn btn-info">Update Campground</button>

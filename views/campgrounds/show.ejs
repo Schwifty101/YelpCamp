@@ -3,22 +3,42 @@
     <div class="row">
         <div class="col-12 col-sm-6">
             <div class="card mb-3">
-                <img src="<%= campground.image %>" alt="" class="card-img-top img-fluid w-100">
+                <div id="campgroundCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <% campground.images.forEach((img, i) => {%>
+                            <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                                <img src="<%= img.url %>" alt="" class="card-img-top img-fluid">
+                            </div>
+                        <% }) %>
+                    </div>
+                    <% if(campground.images.length > 1) {%>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#campgroundCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#campgroundCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                        </button>
+                    <% } %>
+                </div>
                 <div class="card-body">
-                    <h5 class="card.title d-flex justify-content-between align-items-center">
-                        <%= campground.title %>
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <h5 class="card.title m-0 text-decoration-underline">
+                            <b>
+                                <%= campground.title %>
+                            </b>
+                        </h5>
                         <% if (campground.author) { %>
-                            <small class="badge rounded-pill text-bg-light text-muted" style="font-size: 12px;">
+                            <small class="badge rounded-pill text-bg-dark" style="font-size: 12px;">
                                 <%= campground.author.username %>
                             </small>
                         <% } else { %>
-                            <small class="badge rounded-pill text-bg-light text-muted" style="font-size: 12px;">
+                            <small class="badge rounded-pill text-bg-danger" style="font-size: 12px;">
                                 Unknown author
                             </small>
                         <% } %>
-                        
-                    </h5>
-
+                    </div>
                     <p class="card-text">
                         <%= campground.description %>
                     </p>
@@ -75,39 +95,37 @@
             </div>
         </div>
         <div class="col-12 col-sm-6 p-0">
-            <% if(currentUser) {%>
-                <div class="container mb-3 p-0">
-                    <h2 class="d-inline">Leave a review</h2>
-                    <form action="/campgrounds/<%=campground._id%>/reviews" method="post" class="validated-form"
-                        novalidate>
-                        <div>
-                            <fieldset class="starability-basic d-inline">
-                                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked
-                                    aria-label="No rating." />
-                                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                                <label for="first-rate1" title="Terrible">1 star</label>
-                                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                                <label for="first-rate2" title="Not good">2 stars</label>
-                                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                                <label for="first-rate3" title="Average">3 stars</label>
-                                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                                <label for="first-rate4" title="Very good">4 stars</label>
-                                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                                <label for="first-rate5" title="Amazing">5 stars</label>
-                            </fieldset>
+            <div class="container mb-3 p-0">
+                <h2 class="d-inline">Leave a review</h2>
+                <form action="/campgrounds/<%=campground._id%>/reviews" method="post" class="validated-form"
+                    novalidate>
+                    <div>
+                        <fieldset class="starability-basic d-inline">
+                            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked
+                                aria-label="No rating." />
+                            <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                            <label for="first-rate1" title="Terrible">1 star</label>
+                            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                            <label for="first-rate2" title="Not good">2 stars</label>
+                            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                            <label for="first-rate3" title="Average">3 stars</label>
+                            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                            <label for="first-rate4" title="Very good">4 stars</label>
+                            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                            <label for="first-rate5" title="Amazing">5 stars</label>
+                        </fieldset>
+                    </div>
+                    <div class="">
+                        <label for="body" class="form-label">Review</label>
+                        <textarea name="review[body]" id="body" class="mb-2 form-control" cols="30" rows="3"
+                        required></textarea>
+                        <div class="valid-feedback">
+                            Looks Good!
                         </div>
-                        <div class="">
-                            <label for="body" class="form-label">Review</label>
-                            <textarea name="review[body]" id="body" class="mb-2 form-control" cols="30" rows="3"
-                            required></textarea>
-                            <div class="valid-feedback">
-                                Looks Good!
-                            </div>
-                            <button class="btn btn-sm btn-success">Submit</button>
-                        </div>
-                    </form>
-                </div>
-            <% } %>
+                        <button class="btn btn-sm btn-success">Submit</button>
+                    </div>
+                </form>
+            </div>
             <% for(let review of campground.reviews) { %>
                 <div class="card mb-3">
                     <div class="card-header text-muted d-flex justify-content-between align-items-center">
