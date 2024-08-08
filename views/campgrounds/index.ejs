@@ -6,7 +6,26 @@
             <div class="card mb-3">
                 <div class="row g-0">
                     <div class="col-12 col-lg-4">
-                        <img src="<%= campground.image %>" alt="" class="img-fluid w-100">
+                        <!-- data-bs-ride="carousel" add this for autosliding carousel --> 
+                        <div id="campgroundCarousel<%= campground._id %>" class="carousel slide" > 
+                            <div class="carousel-inner">
+                                <% campground.images.forEach((img, i) => {%>
+                                    <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                                        <img src="<%= img.url %>" alt="" class="card-img-top img-fluid">
+                                    </div>
+                                <% }) %>
+                            </div>
+                            <% if(campground.images.length > 1) {%>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#campgroundCarousel<%= campground._id %>" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#campgroundCarousel<%= campground._id %>" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                                </button>
+                            <% } %>
+                        </div>
                     </div>
                     <div class="col-12 col-lg-8 d-flex flex-column">
                         <div class="card-body mb-auto">

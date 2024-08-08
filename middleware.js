@@ -4,11 +4,12 @@ const Review = require('./models/review')
 const ExpressError = require('./utils/expressErrors');
 
 module.exports.validateCampground = (req, res, next) => {
+    const { id } = req.params;
     const { error } = campgroundSchema.validate(req.body);
     if (error) {
         const msg = error.details.map(el => el.message).join(', ');
-        req.flash('error', msg);  // Set the flash message
-        return res.redirect('/campgrounds/new'); // Redirect to the form page
+        req.flash('error', msg);  
+        return res.redirect(`/campgrounds/${id}/edit`); 
     }
     next();
 }
