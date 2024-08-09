@@ -1,19 +1,24 @@
 <% layout('layouts/boilerplate') %>
-<h1>Login</h1>
-<form action="/login" method="post" class="validated-form" novalidate>
-    <div class="mb-3">
-        <label class="form-label" for="username">Username</label>
-        <input class="form-control" type="text" id="username" name="username" required>
-        <div class="valid-feedback">
-            Looks Good!
+    <h1 class="display-1 text-white w-100">Login</h1>
+    <form action="/login" method="post" class="validated-form w-100" novalidate>
+        <div class="mb-3">
+            <label class="form-label text-white" for="username">Username</label>
+            <input class="form-control" type="text" id="username" name="username" required>
+            <div class="valid-feedback">
+                Looks Good!
+            </div>
         </div>
-    </div>
-    <div class="mb-3">
-        <label class="form-label" for="password">Password</label>
-        <input class="form-control" type="password" id="password" name="password" required>
-        <div class="valid-feedback">
-            Looks Good!
+        <div class="mb-3">
+            <label class="form-label text-white" for="password">Password</label>
+            <input class="form-control" type="password" id="password" name="password" required>
+            <div class="valid-feedback">
+                Looks Good!
+            </div>
         </div>
-    </div>
-    <button class="btn btn-success">Login</button>
-</form>
+        <div class="d-flex justify-content-between align-items-center">
+            <button class="btn btn-success">Login</button>
+            <div>
+                <a href="/register" class="btn btn-link text-white">Don't have an account? </a>
+            </div>
+        </div>
+    </form>

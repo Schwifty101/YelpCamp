@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.hero {
+    height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../images/rakaposhi.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.hero .title {
+    text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
+}
+
+.card-container {
+    max-width: 90%;
+    position: relative;
+}
+
+.card-center {
+    top: -50px;
+}
+
+/* .card-side{
+    top: -15px;
+} */
+
+.cover-container {
+    max-width: 60vw;
+}
+/* 
+.nav-link {
+    padding: 0.25rem 0;
+    font-weight: 400;
+    color: whitesmoke;
+    margin-left: 1rem;
+    border-bottom: 0.15rem solid transparent;
+} 
+
+.nav-link:hover {
+    color: rgba(255, 255, 255, 0.5);
+    border-bottom-color: rgba(255, 255, 255, 0.5);
+} 
+
+.nav-link.active {
+    color: white;
+    border-bottom-color: white;
+
+} */

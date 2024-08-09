@@ -1,8 +1,9 @@
 <% layout('layouts/boilerplate') %>
     <link rel="stylesheet" href="/css/stars.css">
+    <div class="container align-middle">
     <div class="row">
         <div class="col-12 col-sm-6">
-            <div class="card mb-3">
+            <div class="card mb-3 text-light bg-dark border-0 shadow">
                 <div id="campgroundCarousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <% campground.images.forEach((img, i) => {%>
@@ -30,7 +31,7 @@
                             </b>
                         </h5>
                         <% if (campground.author) { %>
-                            <small class="badge rounded-pill text-bg-dark" style="font-size: 12px;">
+                            <small class="badge rounded-pill text-dark bg-dark-subtle" style="font-size: 12px;">
                                 <%= campground.author.username %>
                             </small>
                         <% } else { %>
@@ -45,37 +46,36 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     <ul class="list-group list-group-flush w-100">
-                        <li class="list-group-item w-100">
-                            <small class="text-muted">
+                        <li class="list-group-item w-100 text-light bg-dark d-flex justify-content-between align-items-center">
+                            <small class="">
                                 <%= campground.location %>
                             </small>
+                            <b class="lead">
+                                $<%= campground.price %>/night
+                            </b>
                         </li>
-                        <li class="list-group-item w-100">
-                            $<%= campground.price %>/night
-                        </li>
+                        <li class="list-group-item w-100 text-light bg-dark p-0"></li>
                     </ul>
                 </ul>
                 <% if(currentUser && campground.author.equals(currentUser._id)) {%>
-                    <div class="card-body p-0">
-                        <ul class="list-group list-group-flush mt-auto">
-                            <li class="list-group-item d-flex justify-content-between">
-                                <a class="btn btn-secondary" href="/campgrounds">Back</a>
-                                <div>
-                                    <a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
-                                    <form class="d-inline" action="/campgrounds/<%= campground._id %>?_method=DELETE"
-                                        method="post">
-                                        <button class="btn btn-danger">Delete</button>
-                                    </form>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                <% } else if(!currentUser) { %>
-                    <ul class="list-group list-group-flush mt-auto">
-                        <li class="list-group-item d-flex justify-content-between">
+                    <ul class="list-group list-group-flush my-2">
+                        <li class="list-group-item d-flex justify-content-between bg-dark">
                             <a class="btn btn-secondary" href="/campgrounds">Back</a>
                             <div>
-                                <a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+                                <a class="btn btn-info me-1" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+                                <form class="d-inline" action="/campgrounds/<%= campground._id %>?_method=DELETE"
+                                    method="post">
+                                    <button class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                <% } else if(!currentUser) { %>
+                    <ul class="list-group list-group-flush my-2">
+                        <li class="list-group-item d-flex justify-content-between bg-dark">
+                            <a class="btn btn-secondary" href="/campgrounds">Back</a>
+                            <div>
+                                <a class="btn btn-info me-1" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
                                 <form class="d-inline" action="/campgrounds/<%= campground._id %>?_method=DELETE"
                                     method="post">
                                     <button class="btn btn-danger">Delete</button>
@@ -85,8 +85,8 @@
                     </ul>
                 <% } else { %>
                     <div class="card-body p-0">
-                        <ul class="list-group list-group-flush mt-auto">
-                            <li class="list-group-item d-flex justify-content-between">
+                        <ul class="list-group list-group-flush my-2">
+                            <li class="list-group-item d-flex justify-content-between bg-dark">
                                 <a class="btn btn-secondary" href="/campgrounds">Back</a>
                             </li>
                         </ul>
@@ -96,10 +96,10 @@
         </div>
         <div class="col-12 col-sm-6 p-0">
             <div class="container mb-3 p-0">
-                <h2 class="d-inline">Leave a review</h2>
+                <h2 class="d-inline text-white">Leave a review</h2>
                 <form action="/campgrounds/<%=campground._id%>/reviews" method="post" class="validated-form"
                     novalidate>
-                    <div>
+                    <div class="text-white text-light">
                         <fieldset class="starability-basic d-inline">
                             <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked
                                 aria-label="No rating." />
@@ -116,8 +116,8 @@
                         </fieldset>
                     </div>
                     <div class="">
-                        <label for="body" class="form-label">Review</label>
-                        <textarea name="review[body]" id="body" class="mb-2 form-control" cols="30" rows="3"
+                        <label for="body" class="form-label text-white">Review</label>
+                        <textarea name="review[body]" id="body" class="mb-2 form-control bg-dark text-white border-0" cols="30" rows="3"
                         required></textarea>
                         <div class="valid-feedback">
                             Looks Good!
@@ -127,9 +127,9 @@
                 </form>
             </div>
             <% for(let review of campground.reviews) { %>
-                <div class="card mb-3">
-                    <div class="card-header text-muted d-flex justify-content-between align-items-center">
-                        <div>
+                <div class="card mb-3 bg-dark text-white">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="lead">
                             <%= review.author.username %>
                         </div>
                         <div class="d-flex">
@@ -148,9 +148,10 @@
                                 method="post">
                                 <button class="btn btn-sm btn-danger">Delete</button>
                             </form>
-                            <% } %>
+                        <% } %>
                     </div>
                 </div>
             <% } %>
         </div>
     </div>
+</div>
