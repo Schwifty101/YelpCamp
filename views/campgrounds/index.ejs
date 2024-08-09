@@ -1,35 +1,37 @@
 <% layout('layouts/boilerplate') %>
 
-    <h1 class="display-1">All campgrounds</h1>
-    <ul class="px-0">
-        <% for(let campground of campgrounds) { %>
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-12 col-lg-4">
-                        <!-- data-bs-ride="carousel" add this for autosliding carousel --> 
-                        <div id="campgroundCarousel<%= campground._id %>" class="carousel slide" > 
-                            <div class="carousel-inner">
-                                <% campground.images.forEach((img, i) => {%>
-                                    <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
-                                        <img src="<%= img.url %>" alt="" class="card-img-top img-fluid">
-                                    </div>
-                                <% }) %>
-                            </div>
-                            <% if(campground.images.length > 1) {%>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#campgroundCarousel<%= campground._id %>" data-bs-slide="prev">
+<h1 class="display-1 title text-light text-center mb-5">All campgrounds</h1>
+
+<% for(let i = 0; i < campgrounds.length; i += 2) { %>
+    <div class="row">
+        <% for(let j = 0; j < 2 && (i + j) < campgrounds.length; j++) { 
+            let campground = campgrounds[i + j]; %>
+            <div class="col-12 col-sm-6">
+                <div class="card mb-4 text-light bg-dark border-0 shadow">
+                    <div id="campgroundCarousel<%= campground._id %>" class="carousel slide">
+                        <div class="carousel-inner">
+                            <% campground.images.forEach((img, i) => { %>
+                                <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                                    <img src="<%= img.url %>" alt="" class="card-img-top img-fluid">
+                                </div>
+                            <% }) %>
+                        </div>
+                        <% if (campground.images.length > 1) { %>
+                            <button class="carousel-control-prev" type="button"
+                                data-bs-target="#campgroundCarousel<%= campground._id %>" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#campgroundCarousel<%= campground._id %>" data-bs-slide="next">
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                data-bs-target="#campgroundCarousel<%= campground._id %>" data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
-                                </button>
-                            <% } %>
-                        </div>
+                            </button>
+                        <% } %>
                     </div>
-                    <div class="col-12 col-lg-8 d-flex flex-column">
+                    <div class="card-body">
                         <div class="card-body mb-auto">
-                            <h5 class="card.title">
+                            <h5 class="card-title">
                                 <%= campground.title %>
                             </h5>
                             <p class="card-text">
@@ -42,22 +44,21 @@
                             </p>
                         </div>
                         <div>
-                            <ul class="list-group list-group-flush mt-auto">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <a class="btn btn-primary" href="/campgrounds/<%=campground._id %>">View <%= campground.title %></a>
-                                    <% if(currentUser && campground.author && campground.author.equals(currentUser._id)) { %>
-                                        <div>
-                                            <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
-                                            <form class="d-inline" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="post">
-                                                <button class="btn btn-danger">Delete</button>
-                                            </form>
-                                        </div>
-                                    <% } %>                                    
-                                </li>
-                            </ul>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>">View <%= campground.title %></a>
+                                <% if (currentUser && campground.author && campground.author.equals(currentUser._id)) { %>
+                                    <div>
+                                        <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+                                        <form class="d-inline" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="post">
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                <% } %>                                    
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <% } %>
-    </ul>
+        <% } %>
+    </div>
+<% } %>

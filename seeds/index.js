@@ -64,7 +64,7 @@ const seedDB = async () => {
     }
 }
 
-const authorId = new mongoose.Types.ObjectId('66b1f090d8433ac884097c19');
+const authorId = new mongoose.Types.ObjectId('66af95618dfedcb084ad48e9');
 const addAuthorField = async () => {
     try {
         const campgrounds = await Campground.find({});
