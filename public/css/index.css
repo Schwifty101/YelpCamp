@@ -6,3 +6,10 @@ body {
     background-position: center;
     background-attachment: fixed;
 }
+
+@media (max-width: 425px) {
+    .btn-custom {
+        padding: 0.25rem 0.5rem; 
+        font-size: 0.75rem; 
+    }
+}

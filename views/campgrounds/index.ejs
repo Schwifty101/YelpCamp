@@ -1,12 +1,11 @@
 <% layout('layouts/boilerplate') %>
 
 <h1 class="display-1 title text-light text-center mb-5">All campgrounds</h1>
-
 <% for(let i = 0; i < campgrounds.length; i += 2) { %>
     <div class="row">
-        <% for(let j = 0; j < 2 && (i + j) < campgrounds.length; j++) { 
+        <% for(let j = 0; j < 3 && (i + j) < campgrounds.length; j++) { 
             let campground = campgrounds[i + j]; %>
-            <div class="col-12 col-sm-6">
+            <div class="col-12 col-sm-4">
                 <div class="card mb-4 text-light bg-dark border-0 shadow">
                     <div id="campgroundCarousel<%= campground._id %>" class="carousel slide">
                         <div class="carousel-inner">
@@ -30,27 +29,27 @@
                         <% } %>
                     </div>
                     <div class="card-body">
-                        <div class="card-body mb-auto">
-                            <h5 class="card-title">
-                                <%= campground.title %>
+                        <div class="">
+                            <h5 class="card-title display-6">
+                                <b>
+                                    <%= campground.title %>
+                                </b>
                             </h5>
                             <p class="card-text">
                                 <%= campground.description %>
                             </p>
-                            <p class="card-text">
-                                <small class="text-muted">
-                                    <%= campground.location %>
-                                </small>
+                            <p class="card-text text-end blockquote-footer mt-3">
+                                <%= campground.location %>
                             </p>
                         </div>
                         <div>
                             <div class="list-group-item d-flex justify-content-between align-items-center">
-                                <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>">View <%= campground.title %></a>
+                                <a class="btn btn-primary btn-custom" href="/campgrounds/<%= campground._id %>">View Campground</a>
                                 <% if (currentUser && campground.author && campground.author.equals(currentUser._id)) { %>
                                     <div>
-                                        <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+                                        <a class="btn btn-success btn-custom" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
                                         <form class="d-inline" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="post">
-                                            <button class="btn btn-danger">Delete</button>
+                                            <button class="btn btn-danger btn-custom">Delete</button>
                                         </form>
                                     </div>
                                 <% } %>                                    
