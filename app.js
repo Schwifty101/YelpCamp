@@ -2,9 +2,6 @@ if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
 
-console.log(process.env.SECRET);
-console.log(process.env.API_KEY);
-
 // Core Modules
 const path = require('path');
 
@@ -17,6 +14,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
 const localStrategy = require('passport-local');
+const mongoSanitize = require('express-mongo-sanitize');
 
 // Local Modules
 const ExpressError = require('./utils/expressErrors');
@@ -50,7 +48,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 const sessionConfig = {
-    secret: 'hadiqailoveyou',
+    secret: 'notsosecretkeyisit?',
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -63,6 +61,7 @@ app.use(session(sessionConfig));
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(mongoSanitize());
 passport.use(new localStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
