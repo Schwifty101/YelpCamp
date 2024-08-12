@@ -15,7 +15,7 @@ module.exports.validateCampground = (req, res, next) => {
 }
 
 module.exports.isLoggedIn = (req, res, next) => {
-    console.log('REQ.USER...', req.user);
+    // console.log('REQ.USER...', req.user);
     
     if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl; 
