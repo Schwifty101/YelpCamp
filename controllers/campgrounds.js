@@ -6,7 +6,7 @@ module.exports.index = async (req, res) => {
     // campgrounds.forEach(campground => {
     //     console.log('Campground images:', campground.images);
     // });
-    res.render('campgrounds/index', { campgrounds });
+    res.render('campgrounds/index', { title: "Campgrounds", campgrounds });
 };
 
 module.exports.renderCampgroundForm = (req, res) => {
