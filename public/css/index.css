@@ -3,9 +3,8 @@ body {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("../images/rakaposhi.jpg");
     background-size: cover;
-    background-position: center;
+    /* background-position: center; */
     background-attachment: fixed;
-    background-repeat: no-repeat; /* Prevent background image from repeating */
 }
 
 .card-img-top {
