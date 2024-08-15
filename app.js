@@ -23,6 +23,7 @@ const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/users')
 const User = require('./models/user');
+const port = process.env.PORT || 4000;
 const dbURL = process.env.DB_URL; //For Hosting
 // const dbURL = 'mongodb://127.0.0.1:27017/yelpCamp'; //For local
 
@@ -119,6 +120,6 @@ app.use((err, req, res, next) => {
     res.status(status).render('error', { err });
 })
 
-app.listen(3000, () => {
-    console.log('serving on port 3000');
+app.listen(port, () => {
+    console.log(`serving on port ${port}`);
 });
