@@ -5,6 +5,8 @@ body {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    background-repeat: no-repeat; /* Prevent background image from repeating */
+    background-attachment: scroll; /* Ensure the background scrolls with the page */
 }
 
 .card-img-top {
