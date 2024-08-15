@@ -23,7 +23,9 @@
                 </i>
             </h4>
             <p>
-                <%= err.stack %>
+                <% if (process.env.NODE_ENV !== "production") { %>
+                    <p><%= err.stack %></p>
+                <% } %>
             </p>
             <a href="/">
                 <button class="btn btn-light">Back To Home</button>
