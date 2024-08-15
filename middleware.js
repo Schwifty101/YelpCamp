@@ -67,9 +67,10 @@ module.exports.storeReturnTo = (req, res, next) => {
 module.exports.validateReviews = (req, res, next) => {
     const { error } = reviewSchema.validate(req.body);
     if (error) {
-        const msg = error.details.map(el => el.message).join(', ');
-        throw new ExpressError(msg, 400);
-    } else {
-        next();
+        const errorMessage = error.details.map(detail => detail.message).join(', ');
+        req.flash('error', errorMessage);
+        return res.redirect(`/campgrounds/${req.params.id}`); // Redirect back to the form page
     }
+
+    next()
 }
