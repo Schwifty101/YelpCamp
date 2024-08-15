@@ -10,7 +10,7 @@ body {
 .card-img-top {
     height: 400px;
     object-fit: cover;
-    object-position: bottom;
+    object-position: center;
 }
 
 @media (max-width: 1440px) {
