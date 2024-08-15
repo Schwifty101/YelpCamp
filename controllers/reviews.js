@@ -1,16 +1,41 @@
 const Campground = require('../models/campground');
 const Review = require('../models/review');
 
+// module.exports.createReview = async (req, res) => {
+//     const campground = await Campground.findById(req.params.id);
+//     const review = new Review(req.body.review);
+//     review.author = req.user._id;
+//     campground.reviews.push(review);
+//     await review.save();
+//     await campground.save()
+//     req.flash('success', 'Successfully created new review created');
+//     res.redirect(`/campgrounds/${campground._id}`)
+// }
+
 module.exports.createReview = async (req, res) => {
-    const campground = await Campground.findById(req.params.id);
-    const review = new Review(req.body.review);
-    review.author = req.user._id;
-    campground.reviews.push(review);
-    await review.save();
-    await campground.save()
-    req.flash('success', 'Successfully created new review created');
-    res.redirect(`/campgrounds/${campground._id}`)
-}
+    try {
+        const campground = await Campground.findById(req.params.id);
+        
+        if (!campground) {
+            req.flash('error', 'Campground not found');
+            return res.redirect('/campgrounds');
+        }
+
+        const review = new Review(req.body.review);
+        review.author = req.user._id;
+        campground.reviews.push(review);
+
+        await review.save();
+        await campground.save();
+
+        req.flash('success', 'Successfully created new review');
+        res.redirect(`/campgrounds/${campground._id}`);
+    } catch (err) {
+        req.flash('error', 'Something went wrong: ' + err.message);
+        res.redirect(`/campgrounds/${req.params.id}`);
+    }
+};
+
 
 module.exports.deleteReview = async (req, res, next) => {
     const { id, reviewId } = req.params;
