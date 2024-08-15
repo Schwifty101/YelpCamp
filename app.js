@@ -15,6 +15,7 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const localStrategy = require('passport-local');
 const mongoSanitize = require('express-mongo-sanitize');
+const MongoStore = require('connect-mongo');
 
 // Local Modules
 const ExpressError = require('./utils/expressErrors');
@@ -22,11 +23,13 @@ const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/users')
 const User = require('./models/user');
+const dbURL = process.env.DB_URL; //For Hosting
+// const dbURL = 'mongodb://127.0.0.1:27017/yelpCamp'; //For local
 
 main().catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/yelpCamp')
+    await mongoose.connect(dbURL)
         .then(() => {
             console.log("MONGO CONNECTION OPEN!!!");
         }).catch((err) => {
@@ -47,7 +50,21 @@ app.engine('ejs', ejsMate);
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
+
+const store = MongoStore.create({
+    mongoUrl: dbURL,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: 'thisshouldbeabettersecret!'
+    }
+});
+
+store.on("error", function(e) {
+    console.log('SessionStore Error', e);
+})
+
 const sessionConfig = {
+    store,
     name: 'session',
     secret: 'notsosecretkeyisit?',
     resave: false,
@@ -59,6 +76,7 @@ const sessionConfig = {
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
+
 app.use(session(sessionConfig));
 
 app.use(passport.initialize());

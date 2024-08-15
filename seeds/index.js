@@ -1,13 +1,19 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
 const mongoose = require('mongoose');
 const cities = require('./cities');
 const { places, descriptors } = require('./seedHelpers');
 const Campground = require('../models/campground');
+const dbURL = process.env.DB_URL; //For Hosting
+// const dbURL = 'mongodb://127.0.0.1:27017/yelpCamp'; //For local
 
 main().catch(err => console.log(err));
 
 async function main() {
     try {
-        await mongoose.connect('mongodb://127.0.0.1:27017/yelpCamp');
+        await mongoose.connect(dbURL);
         console.log("MONGO CONNECTION OPEN!!!");
 
         // Call seedDB and addAuthorField functions
@@ -32,7 +38,7 @@ const sample = array => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
     await Campground.deleteMany({});
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 24; i++) {
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 40 + 20);
         const camp = new Campground({
@@ -64,7 +70,7 @@ const seedDB = async () => {
     }
 }
 
-const authorId = new mongoose.Types.ObjectId('66af95618dfedcb084ad48e9');
+const authorId = new mongoose.Types.ObjectId('66bdedb2f886d394eb194759');
 const addAuthorField = async () => {
     try {
         const campgrounds = await Campground.find({});
