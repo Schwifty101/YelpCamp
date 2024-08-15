@@ -27,19 +27,23 @@ module.exports.isLoggedIn = (req, res, next) => {
 
 module.exports.isAuthor = async (req, res, next) => {
     const { id } = req.params;
-    const campground = await Campground.findById(id);
+    try {
+        const campground = await Campground.findById(id);
 
-    if (!campground) {
-        req.flash('error', 'Campground not found');
-        return res.redirect('/campgrounds');
+        if (!campground) {
+            req.flash('error', 'Campground not found');
+            return res.redirect('/campgrounds');
+        }
+
+        if (!campground.author.equals(req.user._id)) {
+            req.flash('error', 'You do not have permission to do that');
+            return res.redirect(`/campgrounds/${id}`);
+        }
+
+        next();
+    } catch (e) {
+        next(e); // Handle any errors from the database query
     }
-
-    if (!campground.author.equals(req.user._id)) {
-        req.flash('error', 'You do not have permission to do that');
-        return res.redirect(`/campgrounds/${id}`);
-    }
-
-    next();
 }
 
 module.exports.isReviewAuthor = async (req, res, next) => {
